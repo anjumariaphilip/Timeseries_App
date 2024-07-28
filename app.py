@@ -39,21 +39,21 @@ st.pyplot(decomposition.plot())
 monthly_data = ts_data.resample("M").mean()
 train, test = train_test_split(monthly_data, test_size=0.2, shuffle=False)
 
-    if model_type == "Holt-Winters":
-        st.write('Fitting Holt-Winters model...')
-        model = ExponentialSmoothing(train, seasonal='additive', trend='additive', seasonal_periods=12).fit()
-        forecast = model.forecast(forecast_horizon)
-        conf_int = None  # Holt-Winters does not provide confidence intervals by default
+if model_type == "Holt-Winters":
+  st.write('Fitting Holt-Winters model...')
+  model = ExponentialSmoothing(train, seasonal='additive', trend='additive', seasonal_periods=12).fit()
+  forecast = model.forecast(forecast_horizon)
+  conf_int = None  # Holt-Winters does not provide confidence intervals by default
 
-    elif model_type == "SARIMA":
-        st.write('Fitting SARIMA model...')
-        model = auto_arima(train, seasonal=True, m=12, suppress_warnings=True)
-        forecast, conf_int = model.predict(n_periods=forecast_horizon, return_conf_int=True)
+elif model_type == "SARIMA":
+  st.write('Fitting SARIMA model...')
+  model = auto_arima(train, seasonal=True, m=12, suppress_warnings=True)
+  forecast, conf_int = model.predict(n_periods=forecast_horizon, return_conf_int=True)
 
-    elif model_type == "ARIMA":
-        st.write('Fitting ARIMA model...')
-        model = auto_arima(train, seasonal=False, suppress_warnings=True)
-        forecast, conf_int = model.predict(n_periods=forecast_horizon, return_conf_int=True)
+elif model_type == "ARIMA":
+  st.write('Fitting ARIMA model...')
+  model = auto_arima(train, seasonal=False, suppress_warnings=True)
+  forecast, conf_int = model.predict(n_periods=forecast_horizon, return_conf_int=True)
 
       
 forecast_index = pd.date_range(start=target.index[-1], periods=forecast_horizon + 1, closed='right')
