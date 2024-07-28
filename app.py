@@ -41,7 +41,7 @@ train, test = train_test_split(monthly_data, test_size=0.2, shuffle=False)
 
 if model_type == "Holt-Winters":
         st.write('Fitting Holt-Winters model...')
-        model = ExponentialSmoothing(train, seasonal='additive', trend='additive', seasonal_periods=30).fit()
+        model = ExponentialSmoothing(train, seasonal='additive', trend='additive', seasonal_periods=365).fit()
         forecast = model.forecast(forecast_horizon)
         conf_int = None  # Holt-Winters does not provide confidence intervals by default
     elif model_type == "SARIMA":
