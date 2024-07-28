@@ -32,7 +32,7 @@ if st.button("Forecast"):
 
     # Seasonal decomposition to check for seasonality
     try:
-        decomposition = seasonal_decompose(target, model='additive', period=30)
+        decomposition = seasonal_decompose(target, model='additive', period=365)
         st.subheader("Seasonal Decomposition")
         st.write("Trend, Seasonal, and Residuals")
         st.pyplot(decomposition.plot())
@@ -62,7 +62,7 @@ if st.button("Forecast"):
         forecast_label = 'ARIMA Forecast'
       
     # Generate index for forecasted data
-    forecast_index = pd.date_range(start=train.index[-1], periods=forecast_horizon + 1, closed='right')
+    forecast_index = pd.date_range(start=train.index[-1] + pd.Timedelta(days=1), periods=forecast_horizon)
 
     # Plotting the results
     st.subheader("Forecast vs Actuals")
@@ -87,3 +87,6 @@ if st.button("Forecast"):
     st.write('Forecasted values:')
     forecast_df = pd.DataFrame(forecast, index=forecast_index, columns=[forecast_label])
     st.dataframe(forecast_df)
+
+       
+  
