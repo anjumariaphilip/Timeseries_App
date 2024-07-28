@@ -54,6 +54,7 @@ train, test = train_test_split(monthly_data, test_size=0.2, shuffle=False)
         st.write('Fitting ARIMA model...')
         model = auto_arima(train, seasonal=False, suppress_warnings=True)
         forecast, conf_int = model.predict(n_periods=forecast_horizon, return_conf_int=True)
+
       
 forecast_index = pd.date_range(start=target.index[-1], periods=forecast_horizon + 1, closed='right')
 
