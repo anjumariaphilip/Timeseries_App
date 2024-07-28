@@ -59,10 +59,10 @@ elif model_type == "ARIMA":
 forecast_index = pd.date_range(start=target.index[-1], periods=forecast_horizon + 1, closed='right')
 
     # Plotting the results
-    st.subheader("Forecast vs Actuals")
-    plt.figure(figsize=(12, 6))
-    plt.plot(train, label='Original Data')
-    plt.plot(forecast_index, forecast, label='Forecast', color='green')
+st.subheader("Forecast vs Actuals")
+plt.figure(figsize=(12, 6))
+plt.plot(train, label='Original Data')
+plt.plot(forecast_index, forecast, label='Forecast', color='green')
     
     # Plot confidence intervals if available
     if conf_int is not None:
