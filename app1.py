@@ -81,9 +81,11 @@ if st.button("Forecast"):
     plt.title(f'{forecast_label}')
     st.pyplot(plt)
 
-    st.subheader("Forecasted Values")
-    forecast_df = pd.DataFrame(forecast, index=forecast_index, columns=['Forecast'])
-    st.write(forecast_df)
+   # st.subheader("Forecasted Values")
+    #forecast_df = pd.DataFrame(forecast, index=forecast_index, columns=['Forecast'])
+    #st.write(forecast_df)
+    st.write('Forecasted values:')
+    st.write(forecast_series)
 
 # Debugging to ensure forecast values are not None or empty
     st.write('Debugging Information:')
