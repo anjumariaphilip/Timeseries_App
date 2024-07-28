@@ -23,11 +23,13 @@ if st.button("Forecast"):
 
 
 data['Date'] = data.index
-data['Date'] = pd.to_datetime(data['Date'])
-data.set_index('Date', inplace=True)
-data['Adj Close'].fillna(method='ffill', inplace=True)
+    data['Date'] = pd.to_datetime(data['Date'])
+    data.set_index('Date', inplace=True)
+    data = data.asfreq('D')  # Ensure daily frequency
+    data['Adj Close'].fillna(method='ffill', inplace=True)  # Fill missing values
 
- target = data['Adj Close']
+    # Select the target variable
+    target = data['Adj Close']
 
 decomposition = seasonal_decompose(target, model='multiplicative', period=365)
 st.subheader("Seasonal Decomposition")
