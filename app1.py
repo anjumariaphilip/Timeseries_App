@@ -41,7 +41,7 @@ if st.button("Forecast"):
 
     # Resampling the data to monthly frequency for analysis
     monthly_data = target.resample("M").mean()
-
+ 
     # Train-test split
     train, test = train_test_split(monthly_data, test_size=0.2, shuffle=False)
 
@@ -49,7 +49,7 @@ if st.button("Forecast"):
     if model_choice == "SARIMA":
         st.subheader("SARIMA Forecasting")
         st.write('Fitting SARIMA model...')
-        model = auto_arima(train, seasonal=True, m=12, suppress_warnings=True)
+        model = auto_arima(train, seasonal=True, suppress_warnings=True)
         forecast, conf_int = model.predict(n_periods=forecast_horizon, return_conf_int=True)
         forecast_label = 'SARIMA Forecast'
     else:
