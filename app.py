@@ -39,21 +39,59 @@ st.pyplot(decomposition.plot())
 monthly_data = target.resample("M").mean()
 train, test = train_test_split(monthly_data, test_size=0.2, shuffle=False)
 
-if model_type == "Holt-Winters":
-  st.write('Fitting Holt-Winters model...')
-  model = ExponentialSmoothing(train, seasonal='additive', trend='additive', seasonal_periods=12).fit()
-  forecast = model.forecast(forecast_horizon)
-  conf_int = None  # Holt-Winters does not provide confidence intervals by default
+st.subheader("Holt-Winters Forecasting")
+st.write('Fitting Holt-Winters model...')
+hw_model = ExponentialSmoothing(train, seasonal='additive', trend='additive', seasonal_periods=12).fit()
+hw_forecast = hw_model.forecast(forecast_horizon)
+forecast_index = pd.date_range(start=train.index[-1], periods=forecast_horizon + 1, closed='right')
 
-elif model_type == "SARIMA":
-  st.write('Fitting SARIMA model...')
-  model = auto_arima(train, seasonal=True, m=12, suppress_warnings=True)
-  forecast, conf_int = model.predict(n_periods=forecast_horizon, return_conf_int=True)
+plt.figure(figsize=(12, 6))
+plt.plot(train, label='Original Data')
+plt.plot(forecast_index, hw_forecast, label='Holt-Winters Forecast', color='green')
+plt.legend()
+plt.xlabel('Date')
+plt.ylabel('Value')
+plt.title('Holt-Winters Forecasting')
+st.pyplot(plt)
+st.write('Holt-Winters Forecasted values:')
+hw_forecast_df = pd.DataFrame(hw_forecast, index=forecast_index, columns=['Holt-Winters Forecast'])
+st.dataframe(hw_forecast_df)
 
-elif model_type == "ARIMA":
-  st.write('Fitting ARIMA model...')
-  model = auto_arima(train, seasonal=False, suppress_warnings=True)
-  forecast, conf_int = model.predict(n_periods=forecast_horizon, return_conf_int=True)
+st.subheader("ARIMA Forecasting")
+st.write('Fitting ARIMA model...')
+arima_model = auto_arima(train, seasonal=False, suppress_warnings=True)
+arima_forecast, arima_conf_int = arima_model.predict(n_periods=forecast_horizon, return_conf_int=True)
+
+plt.figure(figsize=(12, 6))
+plt.plot(train, label='Original Data')
+plt.plot(forecast_index, arima_forecast, label='ARIMA Forecast', color='blue')
+plt.fill_between(forecast_index, 
+                     arima_conf_int[:, 0], 
+                     arima_conf_int[:, 1], 
+                     color='k', alpha=.15)
+plt.legend()
+plt.xlabel('Date')
+plt.ylabel('Value')
+plt.title('ARIMA Forecasting')
+st.pyplot(plt)
+
+st.write('ARIMA Forecasted values:')
+arima_forecast_df = pd.DataFrame(arima_forecast, index=forecast_index, columns=['ARIMA Forecast'])
+st.dataframe(arima_forecast_df)
+
+st.subheader("SARIMA Forecasting")
+st.write('Fitting SARIMA model...')
+sarima_model = auto_arima(train, seasonal=True, m=12, suppress_warnings=True)
+sarima_forecast, sarima_conf_int = sarima_model.predict(n_periods=forecast_horizon, return_conf_int=True)
+
+plt.figure(figsize=(12, 6))
+plt.plot(train, label='Original Data')
+plt.plot(forecast_index, sarima_forecast, label='SARIMA Forecast', color='red')
+plt.fill_between(forecast_index, 
+                 sarima_conf_int[:, 0], 
+                 sarima_conf_int[:, 1], 
+                 color='k', alpha=.15)
+
 
       
 forecast_index = pd.date_range(start=target.index[-1], periods=forecast_horizon + 1, closed='right')
@@ -77,9 +115,8 @@ plt.ylabel('Value')
 plt.title(f'{model_type} Forecasting')
 st.pyplot(plt)
 
-    # Display the forecasted values
-st.write('Forecasted values:')
-forecast_df = pd.DataFrame(forecast, index=forecast_index, columns=['Forecast'])
-st.dataframe(forecast_df)
+st.write('SARIMA Forecasted values:')
+sarima_forecast_df = pd.DataFrame(sarima_forecast, index=forecast_index, columns=['SARIMA Forecast'])
+st.dataframe(sarima_forecast_df)
 
-
+   
