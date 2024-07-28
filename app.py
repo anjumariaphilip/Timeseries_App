@@ -36,7 +36,7 @@ st.subheader("Seasonal Decomposition")
 st.write("Trend, Seasonal, and Residuals")
 st.pyplot(decomposition.plot())
 
-monthly_data = ts_data.resample("M").mean()
+monthly_data = target.resample("M").mean()
 train, test = train_test_split(monthly_data, test_size=0.2, shuffle=False)
 
 if model_type == "Holt-Winters":
