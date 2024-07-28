@@ -83,10 +83,13 @@ if st.button("Forecast"):
 
     # Display the forecasted values
     st.write('Forecasted values:')
-    forecast_df = pd.DataFrame(forecast, index=forecast_index, columns=[forecast_label])
-    st.dataframe(forecast_df)
+            forecast_df = pd.DataFrame(forecast, index=forecast_index, columns=[forecast_label])
+            st.dataframe(forecast_df)
 
-    # Debugging to ensure forecast values are not None or empty
+except Exception as e:
+        st.error(f"An error occurred: {e}")
+   
+# Debugging to ensure forecast values are not None or empty
     st.write('Debugging Information:')
     st.write(f'Forecast values: {forecast}')
     if conf_int is not None:
