@@ -32,7 +32,7 @@ if st.button("Forecast"):
 
     # Seasonal decomposition to check for seasonality
     try:
-        decomposition = seasonal_decompose(target, model='additive', period=365)
+        decomposition = seasonal_decompose(target, model='additive', period=30)
         st.subheader("Seasonal Decomposition")
         st.write("Trend, Seasonal, and Residuals")
         st.pyplot(decomposition.plot())
