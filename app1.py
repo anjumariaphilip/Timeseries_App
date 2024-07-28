@@ -86,8 +86,8 @@ if st.button("Forecast"):
             forecast_df = pd.DataFrame(forecast, index=forecast_index, columns=[forecast_label])
             st.dataframe(forecast_df)
 
-except Exception as e:
-        st.error(f"An error occurred: {e}")
+    except Exception as e:
+           st.error(f"An error occurred: {e}")
    
 # Debugging to ensure forecast values are not None or empty
     st.write('Debugging Information:')
