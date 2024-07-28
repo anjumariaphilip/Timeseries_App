@@ -92,3 +92,13 @@ if st.button("Forecast"):
     st.write(f'Forecast values: {forecast}')
     if conf_int is not None:
         st.write(f'Confidence intervals: {conf_int}')
+
+   st.subheader("Forecast Summary")
+   forecast_summary = {
+        'Mean': forecast_df['Forecast'].mean(),
+        'Median': forecast_df['Forecast'].median(),
+        'Standard Deviation': forecast_df['Forecast'].std(),
+        'Minimum': forecast_df['Forecast'].min(),
+        'Maximum': forecast_df['Forecast'].max()
+    }
+    st.write(forecast_summary)
