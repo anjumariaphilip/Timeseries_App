@@ -83,7 +83,7 @@ if st.button("Forecast"):
 
     st.subheader("Forecasted Values")
     forecast_df = pd.DataFrame(forecast, index=forecast_index, columns=['Forecast'])
-    st.write(forecast_df:')
+    st.write(forecast_df)
     #st.write('Forecasted values:')
     #st.write(forecast_index)
 
