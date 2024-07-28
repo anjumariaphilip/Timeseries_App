@@ -22,7 +22,7 @@ if st.button("Forecast"):
     data = yf.download(ticker, start=start_date, end=end_date)
 
 
-data['Date'] = data.index
+    data['Date'] = data.index
     data['Date'] = pd.to_datetime(data['Date'])
     data.set_index('Date', inplace=True)
     data = data.asfreq('D')  # Ensure daily frequency
