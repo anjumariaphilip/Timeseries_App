@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.seasonal import seasonal_decompose
 from pmdarima import auto_arima
 from datetime import datetime
+from statsmodels.tsa.holtwinters import ExponentialSmoothing
 
 # Title of the Streamlit app
 st.title("Stock Price Forecasting")
@@ -44,6 +45,23 @@ if st.button("Forecast"):
         st.write("No seasonality detected. Using ARIMA model.")
         model = auto_arima(target, seasonal=False, stepwise=True)
 
+holt_winters_model = ExponentialSmoothing(train_data, seasonal='mul', seasonal_periods=12).fit()
+holt_winters_forecast = holt_winters_model.forecast(12)
+     
+plt.figure(figsize=(10, 5))
+plt.plot(train_data, label='Observed')
+plt.plot(holt_winters_forecast, label='Holt-Winters Forecast', linestyle='--')
+plt.title('Holt-Winters Forecast')
+plt.xlabel('Date')
+plt.ylabel('Close Price')
+plt.legend()
+plt.show()
+
+
+
+
+
+    
     # Forecasting
     forecast = model.predict(n_periods=forecast_horizon)
     forecast_index = pd.date_range(start=data.index[-1], periods=forecast_horizon + 1, closed='right')
