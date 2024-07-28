@@ -102,3 +102,7 @@ if st.button("Forecast"):
         'Maximum': forecast_df['Forecast'].max()
     }
     st.write(forecast_summary)
+    st.subheader(f"{model_choice} Model Summary")
+    st.text(model.summary())
+
+    
