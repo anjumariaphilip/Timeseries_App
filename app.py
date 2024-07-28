@@ -65,21 +65,21 @@ plt.plot(train, label='Original Data')
 plt.plot(forecast_index, forecast, label='Forecast', color='green')
     
     # Plot confidence intervals if available
-    if conf_int is not None:
-        plt.fill_between(forecast_index, 
-                         conf_int[:, 0], 
-                         conf_int[:, 1], 
-                         color='k', alpha=.15)
+if conf_int is not None:
+   plt.fill_between(forecast_index, 
+                    conf_int[:, 0], 
+                    conf_int[:, 1], 
+                    color='k', alpha=.15)
 
-    plt.legend()
-    plt.xlabel('Date')
-    plt.ylabel('Value')
-    plt.title(f'{model_type} Forecasting')
-    st.pyplot(plt)
+plt.legend()
+plt.xlabel('Date')
+plt.ylabel('Value')
+plt.title(f'{model_type} Forecasting')
+st.pyplot(plt)
 
     # Display the forecasted values
-    st.write('Forecasted values:')
-    forecast_df = pd.DataFrame(forecast, index=forecast_index, columns=['Forecast'])
-    st.dataframe(forecast_df)
+st.write('Forecasted values:')
+forecast_df = pd.DataFrame(forecast, index=forecast_index, columns=['Forecast'])
+st.dataframe(forecast_df)
 
 
